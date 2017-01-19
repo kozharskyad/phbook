@@ -9,4 +9,7 @@
 import UIKit
 
 class StartViewController: BaseViewController {
+    @IBAction func addButtonHandler(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "contactListToAddContact", sender: sender)
+    }
 }
