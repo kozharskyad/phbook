@@ -25,6 +25,14 @@ class Contact: Mappable {
         
     }
     
+    /**
+     Initialization function for `Contact` model
+     
+     - Parameter name: First name
+     - Parameter lastname: Last name
+     - Parameter phoneNumber: Mobile phone number
+     - Parameter comment: User commentary
+    */
     init(name: String, lastname: String, phoneNumber: String, comment: String) {
         self.name = name
         self.lastname = lastname
