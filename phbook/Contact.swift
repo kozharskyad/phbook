@@ -8,12 +8,17 @@
 
 import ObjectMapper
 
+/**
+ Standard contact model
+*/
 class Contact: Mappable {
+    // MARK: Model fields
     var name: String?
     var lastname: String?
     var phoneNumber: String?
     var comment: String?
     
+    //MARK: Mapping
     func mapping(map: Map) {
         self.name <- map["name"]
         self.lastname <- map["lastname"]
@@ -21,10 +26,19 @@ class Contact: Mappable {
         self.comment <- map["comment"]
     }
     
+    //MARK: Init
     required init?(map: Map) {
         
     }
     
+    /**
+     Initialization function for `Contact` model
+     
+     - Parameter name: First name
+     - Parameter lastname: Last name
+     - Parameter phoneNumber: Mobile phone number
+     - Parameter comment: User commentary
+    */
     init(name: String, lastname: String, phoneNumber: String, comment: String) {
         self.name = name
         self.lastname = lastname

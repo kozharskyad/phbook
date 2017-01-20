@@ -11,7 +11,7 @@ import Alamofire
 protocol AddViewControllerVMDelegate: class {
     func didStartSavingContact()
     func didReceiveSerializationError()
-    func didReceiveSavingError()
+    func didReceiveSavingError(errorText: String)
     func didReceiveFillError()
     func didSavedContact()
 }
@@ -19,7 +19,7 @@ protocol AddViewControllerVMDelegate: class {
 extension AddViewControllerVMDelegate {
     func didStartSavingContact() {}
     func didReceiveSerializationError() {}
-    func didReceiveSavingError() {}
+    func didReceiveSavingError(errorText: String) {}
     func didReceiveFillError() {}
     func didSavedContact() {}
 }
@@ -55,14 +55,23 @@ class AddViewControllerVM {
         
         let parameters: Parameters = newContact.toJSON()
         
-        self.lastRequest = Alamofire.request("http://192.168.1.66:3000/api/add", method: .post, parameters: parameters).responseJSON(completionHandler: { response in
+        if let lastRequest = self.lastRequest {
+            lastRequest.cancel()
+        }
+        
+       self.lastRequest = Alamofire.request("http://192.168.1.66:3000/api/add", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { response in
             guard let json = response.result.value as? [String: Any] else {
                 self.delegate?.didReceiveSerializationError()
                 return
             }
             
-            guard let result = json["result"] as? String, result == "ok" else {
-                self.delegate?.didReceiveSavingError()
+            guard let result = json["result"] as? String else {
+                self.delegate?.didReceiveSerializationError()
+                return
+            }
+            
+            guard result == "ok" else {
+                self.delegate?.didReceiveSavingError(errorText: result)
                 return
             }
             

@@ -27,32 +27,24 @@ class AddViewController: BaseViewController {
     override func viewDidLoad() {
         self.viewModel.delegate = self
     }
-    
-    fileprivate func showAlert(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        let alertOKAction = UIAlertAction(title: "OK", style: .default, handler: handler)
-        alertController.addAction(alertOKAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
 }
 
 extension AddViewController: AddViewControllerVMDelegate {
     func didReceiveFillError() {
-        self.showAlert(title: "Error", message: "All fields must be filled!")
+        Alert.show(with: "Error", message: "All fields must be filled!")
     }
     
     func didSavedContact() {
-        self.showAlert(title: "Success", message: "Contact saved!", handler: { action in
+        Alert.show(with: "Success", message: "Contact saved!", target: self, dismissAfter: 1, okHandler: nil, completion: {
             self.dismiss(animated: true, completion: nil)
         })
     }
     
     func didReceiveSerializationError() {
-        self.showAlert(title: "Error", message: "Server sent unreadable data!")
+        Alert.show(with: "Error", message: "Server sent unreadable data!")
     }
     
-    func didReceiveSavingError() {
-        self.showAlert(title: "Error", message: "Error with saving contact!")
+    func didReceiveSavingError(errorText: String) {
+        Alert.show(with: "Error", message: errorText)
     }
 }
