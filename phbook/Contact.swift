@@ -8,11 +8,9 @@
 
 import ObjectMapper
 
-/**
- Standard contact model
-*/
+/** Contact model */
 class Contact: Mappable {
-    // MARK: Model fields
+    // MARK: Public model properties
     var name: String?
     var lastname: String?
     var phoneNumber: String?
@@ -33,7 +31,6 @@ class Contact: Mappable {
     
     /**
      Initialization function for `Contact` model
-     
      - Parameter name: First name
      - Parameter lastname: Last name
      - Parameter phoneNumber: Mobile phone number

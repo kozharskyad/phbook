@@ -13,10 +13,11 @@ import UIKit
  Simply shows alert with extended parameters
 */
 class Alert {
-    //MARK: Properties
+    //MARK: Public properties
     let shared = Alert()
     static var currentAlert: UIAlertController?
     
+    //MARK: Public class methods
     /**
      Function shows alert with extended parameters
      - Parameter title: Alert window title
@@ -55,9 +56,8 @@ class Alert {
         return alertController
     }
     
-    /**
-     Returns current top view controller
-    */
+    //MARK: Private class methods
+    /** Returns current top view controller */
     private class func getCurrentViewController() -> UIViewController {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
