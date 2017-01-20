@@ -21,6 +21,10 @@ class AddViewController: BaseViewController {
     }
     
     @IBAction func saveButtonHandler(_ sender: UIBarButtonItem) {
+        if let lastRequest = self.viewModel.lastRequest {
+            lastRequest.cancel()
+        }
+        
         self.viewModel.save(name: self.nameTextView.text, lastname: self.lastnameTextView.text, phoneNumber: self.phoneNumberTextView.text, comment: self.commentTextView.text)
     }
     
@@ -52,7 +56,7 @@ extension AddViewController: AddViewControllerVMDelegate {
         self.showAlert(title: "Error", message: "Server sent unreadable data!")
     }
     
-    func didReceiveSavingError() {
-        self.showAlert(title: "Error", message: "Error with saving contact!")
+    func didReceiveSavingError(errorText: String) {
+        self.showAlert(title: "Error", message: errorText)
     }
 }
