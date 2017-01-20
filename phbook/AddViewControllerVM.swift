@@ -55,7 +55,11 @@ class AddViewControllerVM {
         
         let parameters: Parameters = newContact.toJSON()
         
-        self.lastRequest = Alamofire.request("http://192.168.1.66:3000/api/add", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { response in
+        if let lastRequest = self.lastRequest {
+            lastRequest.cancel()
+        }
+        
+       self.lastRequest = Alamofire.request("http://192.168.1.66:3000/api/add", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { response in
             guard let json = response.result.value as? [String: Any] else {
                 self.delegate?.didReceiveSerializationError()
                 return
