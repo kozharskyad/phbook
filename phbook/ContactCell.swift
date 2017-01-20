@@ -8,12 +8,19 @@
 
 import UIKit
 
+/** Cell for `Contact` view model */
 class ContactCell: UITableViewCell {
+    //MARK: IBOutlets
     @IBOutlet weak var nameValueLabel: UILabel!
     @IBOutlet weak var lastnameValueLabel: UILabel!
     @IBOutlet weak var phoneNumberValueLabel: UILabel!
     @IBOutlet weak var commentValueLabel: UILabel!
     
+    //MARK: Public methods
+    /**
+     Setups cell with view model
+     - Parameter viewModel: View model to setup cell with
+    */
     func setup(with viewModel: Any) {
         guard let viewModel = viewModel as? ContactCellVM else { return }
         

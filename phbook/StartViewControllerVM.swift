@@ -8,23 +8,32 @@
 
 import Alamofire
 
+//MARK: View model delegate methods
 protocol StartViewControllerVMDelegate: class {
+    /** Fires when all cell data removed */
     func didStartGetNumbers()
+    /** Fires when json dictionary unwrapping unsuccessfull */
     func didReceiveSerializationError()
+    /** Fires when cells data array filled with view models */
     func didFinishGetNumbers()
 }
 
+//MARK: Optional methods delegate bindings
 extension StartViewControllerVMDelegate {
     func didStartGetNumbers() {}
     func didReceiveSerializationError() {}
     func didFinishGetNumbers() {}
 }
 
+/** Contact list view controller view model */
 class StartViewControllerVM {
+    //MARK: Public properties
     weak var delegate: StartViewControllerVMDelegate?
     var cellsData: [ContactCellVM] = []
     var lastRequest: Request?
     
+    //MARK: Public methods
+    /** Fills cells data array with `Contact` cell view models */
     func getNumbers() {
         self.cellsData.removeAll()
         self.delegate?.didStartGetNumbers()

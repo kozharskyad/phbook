@@ -8,16 +8,21 @@
 
 import UIKit
 
+/** Cells identificators enumeration */
 enum StartCellIDs: String {
     case contactCell = "contactCell"
 }
 
+/** Contact list view controller implementation */
 class StartViewController: BaseViewController {
-    let viewModel = StartViewControllerVM()
+    //MARK: Private properties
+    fileprivate let viewModel = StartViewControllerVM()
     
+    //MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    //MARK: Lifecycle
     override func viewDidLoad() {
         self.viewModel.delegate = self
     }
@@ -27,16 +32,20 @@ class StartViewController: BaseViewController {
         self.viewModel.getNumbers()
     }
     
+    //MARK: Private methods
+    /** Shows loading spinner on table */
     fileprivate func showSpinner() {
         self.activityIndicator.alpha = 1
         self.activityIndicator.startAnimating()
     }
     
+    /** Hides loading table spinner */
     fileprivate func hideSpinner() {
         self.activityIndicator.alpha = 0
         self.activityIndicator.stopAnimating()
     }
     
+    //MARK: Button handlers
     @IBAction func refreshButtonHandler(_ sender: UIBarButtonItem) {
         self.viewModel.getNumbers()
     }
@@ -46,6 +55,7 @@ class StartViewController: BaseViewController {
     }
 }
 
+//MARK: StartViewControllerVMDelegate
 extension StartViewController: StartViewControllerVMDelegate {
     func didStartGetNumbers() {
         self.tableView.reloadData()
@@ -62,12 +72,15 @@ extension StartViewController: StartViewControllerVMDelegate {
     }
 }
 
+//MARK: UITableViewDelegate
 extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //TODO: Make proper cell actions and handles
         print("SELECTED \(indexPath)")
     }
 }
 
+//MARK: UITableViewDataSource
 extension StartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.cellsData.count
