@@ -52,10 +52,7 @@ class StartViewControllerVM {
                 }
             }
             
-            let deadline = DispatchTime.now() + 3
-            DispatchQueue.main.asyncAfter(deadline: deadline, execute: {
-                self.delegate?.didFinishGetNumbers()
-            })
+            self.delegate?.didFinishGetNumbers()
         })
     }
 }
