@@ -7,9 +7,63 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Server change-->
+        <scene sceneID="7Vd-He-Ldf">
+            <objects>
+                <viewController id="pP3-Uv-0gI" customClass="ServerChangeViewController" customModule="phbook" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fg9-Wr-vBd"/>
+                        <viewControllerLayoutGuide type="bottom" id="8mV-Be-xOQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xz1-QN-wi8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aVq-79-T3i">
+                                <rect key="frame" x="163" y="318" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Internet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36P-rk-RvU">
+                                <rect key="frame" x="10" y="323" width="60" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JvR-8J-m0i">
+                                <rect key="frame" x="324" y="323" width="41" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aVq-79-T3i" firstAttribute="centerY" secondItem="xz1-QN-wi8" secondAttribute="centerY" id="5g7-cR-cKc"/>
+                            <constraint firstItem="aVq-79-T3i" firstAttribute="centerY" secondItem="36P-rk-RvU" secondAttribute="centerY" id="Jgg-6x-zIN"/>
+                            <constraint firstItem="aVq-79-T3i" firstAttribute="centerX" secondItem="xz1-QN-wi8" secondAttribute="centerX" id="LKI-sH-46H"/>
+                            <constraint firstItem="JvR-8J-m0i" firstAttribute="centerY" secondItem="aVq-79-T3i" secondAttribute="centerY" id="Nd2-9w-5hk"/>
+                            <constraint firstAttribute="trailing" secondItem="JvR-8J-m0i" secondAttribute="trailing" constant="10" id="g9z-BX-qDU"/>
+                            <constraint firstItem="36P-rk-RvU" firstAttribute="leading" secondItem="xz1-QN-wi8" secondAttribute="leading" constant="10" id="qhO-Jc-2WV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Server change" id="Azn-LG-pyk">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="8KO-9T-HjC">
+                            <connections>
+                                <action selector="closeButtonHandler:" destination="pP3-Uv-0gI" id="u70-zG-Hgd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="serverSwitch" destination="aVq-79-T3i" id="xkQ-aA-fUH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NPM-kV-whF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1358" y="69"/>
+        </scene>
         <!--Contact List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -30,7 +84,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tM3-W3-5gk" id="Nyc-fP-FWw">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="132"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="133"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhv-6G-dcl">
@@ -137,12 +191,20 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Contact List" id="QY1-ye-EHE">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="25l-jW-Ukq">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="refreshButtonHandler:" destination="BYZ-38-t0r" id="dNJ-RB-r3O"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="25l-jW-Ukq">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="refreshButtonHandler:" destination="BYZ-38-t0r" id="dNJ-RB-r3O"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="organize" id="FBB-lf-BgI">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="serverChangeButtonHandler:" destination="BYZ-38-t0r" id="Tth-T1-u5V"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="uqg-w2-gUg">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -154,6 +216,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="1Dp-ff-uI9" id="tWe-QD-clc"/>
                         <outlet property="tableView" destination="R1b-cc-B0w" id="4q3-AJ-t4b"/>
+                        <segue destination="QUL-MQ-fr5" kind="presentation" identifier="contactListToServerChange" id="WMA-s3-riN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -317,6 +380,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DgD-QO-CTN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1358" y="777"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LaF-16-i6b">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QUL-MQ-fr5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c7q-Ll-EsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pP3-Uv-0gI" kind="relationship" relationship="rootViewController" id="EjG-IO-4a8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MLX-y2-PZd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="630" y="69"/>
         </scene>
     </scenes>
 </document>
