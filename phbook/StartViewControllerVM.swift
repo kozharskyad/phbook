@@ -35,21 +35,26 @@ class StartViewControllerVM {
     //MARK: Public methods
     /** Fills cells data array with `Contact` cell view models */
     func getNumbers() {
+        if let lastRequest = self.lastRequest {
+            lastRequest.cancel()
+        }
+        
         self.cellsData.removeAll()
         self.delegate?.didStartGetNumbers()
         
-        let url = "http://192.168.1.66:3000/api/numbers"
-        
-        self.lastRequest = Alamofire.request(url).responseJSON(completionHandler: { response in
-            guard let json = response.result.value as? [[String: Any]] else {
+        self.lastRequest = Network.request(apiCommand: "numbers", model: Contact.self, completion: { _, models, error in
+            guard error == nil else {
                 self.delegate?.didReceiveSerializationError()
                 return
             }
             
-            for dict in json {
-                if let contact = Contact(JSON: dict) {
-                    self.cellsData.append(ContactCellVM(contact: contact))
-                }
+            guard let models = models else {
+                self.delegate?.didReceiveSerializationError()
+                return
+            }
+            
+            for model in models {
+                self.cellsData.append(ContactCellVM(contact: model))
             }
             
             self.delegate?.didFinishGetNumbers()

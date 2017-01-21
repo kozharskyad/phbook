@@ -14,7 +14,7 @@ import UIKit
 */
 class Alert {
     //MARK: Public properties
-    let shared = Alert()
+    static let shared = Alert()
     static var currentAlert: UIAlertController?
     
     //MARK: Public class methods
