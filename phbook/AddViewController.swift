@@ -8,14 +8,18 @@
 
 import UIKit
 
+/** Contact add view controller */
 class AddViewController: BaseViewController {
-    let viewModel = AddViewControllerVM()
+    //MARK: Private properties
+    fileprivate let viewModel = AddViewControllerVM()
     
+    //MARK: IBOutlets
     @IBOutlet weak var nameTextView: UITextField!
     @IBOutlet weak var lastnameTextView: UITextField!
     @IBOutlet weak var phoneNumberTextView: UITextField!
     @IBOutlet weak var commentTextView: UITextField!
     
+    //MARK: Button handlers
     @IBAction func cancelButtonAction(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -24,11 +28,13 @@ class AddViewController: BaseViewController {
         self.viewModel.save(name: self.nameTextView.text, lastname: self.lastnameTextView.text, phoneNumber: self.phoneNumberTextView.text, comment: self.commentTextView.text)
     }
     
+    //MARK: Lifecycle
     override func viewDidLoad() {
         self.viewModel.delegate = self
     }
 }
 
+//MARK: AddViewControllerVMDelegate
 extension AddViewController: AddViewControllerVMDelegate {
     func didReceiveFillError() {
         Alert.show(with: "Error", message: "All fields must be filled!")
