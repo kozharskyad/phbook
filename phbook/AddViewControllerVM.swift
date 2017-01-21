@@ -8,14 +8,16 @@
 
 import Alamofire
 
+/** Add view controller view model delegate methods */
 protocol AddViewControllerVMDelegate: class {
-    func didStartSavingContact()
-    func didReceiveSerializationError()
-    func didReceiveSavingError(errorText: String)
-    func didReceiveFillError()
-    func didSavedContact()
+    func didStartSavingContact() /** Fires when contact saving started */
+    func didReceiveSerializationError() /** Fires when response data cannot serialize as JSON */
+    func didReceiveSavingError(errorText: String) /** Fires when network error occured */
+    func didReceiveFillError() /** Fires when fields incostistence occured */
+    func didSavedContact() /** Fires when contact successfuly saved */
 }
 
+/** Add view controller view model delegate optional functions bindings */
 extension AddViewControllerVMDelegate {
     func didStartSavingContact() {}
     func didReceiveSerializationError() {}
@@ -24,12 +26,26 @@ extension AddViewControllerVMDelegate {
     func didSavedContact() {}
 }
 
+/** Add view controller view model */
 class AddViewControllerVM {
+    //MARK: Public properties
     weak var delegate: AddViewControllerVMDelegate?
     weak var lastRequest: Request?
     
+    //MARK: Public methods
+    /** 
+     Save contact function
+     - Parameter name: Contact first name
+     - Parameter lastname: Contact last name
+     - Parameter phoneNumber: Contact phone number
+     - Parameter comment: User's commentary
+    */
     func save(name: String?, lastname: String?, phoneNumber: String?, comment: String?) {
         self.delegate?.didStartSavingContact()
+        
+        if let lastRequest = self.lastRequest {
+            lastRequest.cancel()
+        }
         
         guard let name = name, !name.isEmpty else {
             self.delegate?.didReceiveFillError()
@@ -55,23 +71,17 @@ class AddViewControllerVM {
         
         let parameters: Parameters = newContact.toJSON()
         
-        if let lastRequest = self.lastRequest {
-            lastRequest.cancel()
-        }
-        
-       self.lastRequest = Alamofire.request("http://192.168.1.66:3000/api/add", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON(completionHandler: { response in
-            guard let json = response.result.value as? [String: Any] else {
-                self.delegate?.didReceiveSerializationError()
+        self.lastRequest = Network.request(apiCommand: "add", model: BackendResult.self, method: .post, parameters: parameters, completion: { _, models, error in
+            guard error == nil else {
+                self.delegate?.didReceiveSavingError(errorText: error?.localizedDescription ?? "Undefined error")
                 return
             }
             
-            guard let result = json["result"] as? String else {
+            guard let models = models,
+                let resultModel = models.first,
+                let resultString = resultModel.result,
+                resultString == "ok" else {
                 self.delegate?.didReceiveSerializationError()
-                return
-            }
-            
-            guard result == "ok" else {
-                self.delegate?.didReceiveSavingError(errorText: result)
                 return
             }
             
