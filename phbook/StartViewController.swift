@@ -53,6 +53,10 @@ class StartViewController: BaseViewController {
     @IBAction func addButtonHandler(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "contactListToAddContact", sender: sender)
     }
+    
+    @IBAction func serverChangeButtonHandler(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "contactListToServerChange", sender: sender)
+    }
 }
 
 //MARK: StartViewControllerVMDelegate
